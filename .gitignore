@@ -7,3 +7,6 @@ terraform.tfvars
 # Ignore Terraform state files
 *.tfstate
 *.tfstate.*
+
+# Pycharm files
+.idea/
