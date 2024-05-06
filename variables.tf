@@ -11,11 +11,11 @@ variable "secret_key" {
 }
 
 variable "common_tags" {
-  default     = {
-    env = "Dev"
-    owner = "Mesrop Tarkhanyan"
-    project = "CE_for_PE"
-}
+  default = {
+    env     = "dev"
+    owner   = "mesrop.tarkhanyan@quantori.com"
+    project = "INFRA"
+  }
   description = "Default Tags for all resources"
   type        = map(string)
 }
@@ -24,4 +24,10 @@ variable "subnet_id" {
   description = "Subnet ID for the EC2 instance"
   type        = string
   default     = "subnet-07549c87757e073ea"
+}
+
+variable "my_ip" {
+  description = "My IP address"
+  type        = string
+  default     = "165.225.200.126/32"
 }
