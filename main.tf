@@ -20,7 +20,7 @@ data "aws_ami" "ubuntu" {
   owners = ["099720109477"] # Canonical
 }
 
-# 2.2. Declare EC2 instance
+# 2.2. Declare an EC2 instance
 resource "aws_instance" "my_ec2" {
   ami                         = data.aws_ami.ubuntu.id
   instance_type               = "t3a.small"
@@ -45,7 +45,7 @@ resource "aws_security_group" "sg_allow_inbound_ssh_22_http_80_outbound_anywhere
   vpc_id      = "vpc-024cf058980b63412"
   #   depends_on = [aws_instance.my_ec2]
 
-  ingress {
+  ingress { # входящий трафик
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
@@ -58,7 +58,7 @@ resource "aws_security_group" "sg_allow_inbound_ssh_22_http_80_outbound_anywhere
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-  egress {
+  egress { # исходящий трафик
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
@@ -72,7 +72,7 @@ resource "aws_security_group" "sg_allow_inbound_ssh_22_http_80_outbound_anywhere
   })
 }
 
-# 2.4. Declare S3 bucket
+# 2.4. Declare an S3 bucket
 # resource "aws_s3_bucket" "my_new_bucket" {
 #   bucket = data.aws_s3_bucket.my_bucket_data.id
 #   tags = var.common_tags
@@ -137,4 +137,10 @@ resource "aws_iam_role_policy_attachment" "attach_s3_full_access_policy_tf_to_ia
 resource "aws_iam_instance_profile" "ec2_profile_tf" {
   name = "ec2_profile_aws"
   role = aws_iam_role.s3_full_access_role_tf.name
+}
+
+# 5. Stop the EC2 instance
+resource "aws_ec2_instance_state" "my_ec2_state" {
+  instance_id = aws_instance.my_ec2.id
+  state       = "stopped"
 }
