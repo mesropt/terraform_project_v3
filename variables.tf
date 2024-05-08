@@ -21,13 +21,13 @@ variable "common_tags" {
 }
 
 variable "subnet_id" {
-  description = "Subnet ID for the EC2 instance"
+  description = "Subnet ID where the EC2 instance will be launched"
   type        = string
   default     = "subnet-07549c87757e073ea"
 }
 
 variable "my_ip" {
-  description = "My IP address"
+  description = "My public IP address for secure SSH access"
   type        = string
   default     = "165.225.200.126/32"
 }
