@@ -22,4 +22,4 @@ jobs:
 
       - name: Sync files to S3 bucket
         run:
-          aws s3 sync test_dir s3://qnt-test-bucket --delete
+          aws s3 sync test_dir s3://qnt-clouds-for-pe-tfstate --delete
