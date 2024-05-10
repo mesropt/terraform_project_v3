@@ -1,0 +1,12 @@
+# Ignore credentials
+terraform.tfvars
+
+# Ignore .terraform catalogue
+.terraform/
+
+# Ignore Terraform state files
+*.tfstate
+*.tfstate.*
+
+# Pycharm files
+.idea/
