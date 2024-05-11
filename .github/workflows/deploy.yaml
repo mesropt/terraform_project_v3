@@ -36,17 +36,7 @@ jobs:
         run: cd terraform && terraform init -reconfigure
 
       - name: Plan Terraform code # - Plan your terraform code
-        run: |
-          export TF_LOG="DEBUG"
-          export TF_LOG_PATH="terraform_plan.log"
-          cd terraform && terraform plan
-
-      - name: Upload Terraform Plan Logs
-        uses: actions/upload-artifact@v2
-        with:
-          name: terraform-plan-logs
-          path: terraform/terraform_plan.log
-
+        run: cd terraform && terraform plan
 
       - name: Apply Terraform # - Apply terraform code
         run: cd terraform && terraform apply -auto-approve
