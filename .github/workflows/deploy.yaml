@@ -24,7 +24,7 @@ jobs:
       - name: Setup Terraform # - Terraform setup (Action?)
         uses: hashicorp/setup-terraform@v3
         with:
-          terraform_version: "~> 5.0"
+          terraform_version: "~> 1.2"
 
       - name: Check Terraform format # test
         run: terraform fmt -check
@@ -40,8 +40,3 @@ jobs:
 
       - name: Print Message
         run: echo "Terraform applied. Hello from Deploy workflow!"
-
-#
-#      - name: Sync files to S3 bucket
-#        run:
-#          aws s3 sync test_dir s3://qnt-clouds-for-pe-tfstate  --delete
