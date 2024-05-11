@@ -33,7 +33,7 @@ jobs:
         run: terraform validate
 
       - name: Plan Terraform code # - Plan your terraform code
-        run: cd terraform && terraform init && terraform plan
+        run: cd terraform && terraform init -reconfigure && terraform plan
 
       - name: Apply Terraform # - Apply terraform code
         run: terraform apply -auto-approve
