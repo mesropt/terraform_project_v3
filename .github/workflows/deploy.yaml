@@ -26,6 +26,9 @@ jobs:
         with:
           terraform_version: "~> 1.2"
 
+      - name: Set working directory
+        run: cd terraform
+
       - name: Check Terraform format # test
         run: terraform fmt -check
 
