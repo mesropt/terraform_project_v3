@@ -10,3 +10,5 @@ terraform.tfvars
 
 # Pycharm files
 .idea/
+
+terraform/.terraform.lock.hcl
