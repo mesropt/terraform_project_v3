@@ -6,8 +6,8 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest # CI server (runner) as ubuntu-latest
-    needs:
-      - deploy
+#    needs:
+#      - deploy
 
     steps:
       - name: Checkout # Checkout your code/files (Action checkout)

@@ -6,6 +6,11 @@ on:
       - 'terraform/**'
   workflow_dispatch: # manual run
 
+#env:
+#  aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#  aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#  aws-region: "us-east-2"
+
 jobs:
   deploy:
     runs-on: ubuntu-latest # CI server (runner) as ubuntu-latest
