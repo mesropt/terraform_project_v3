@@ -26,9 +26,6 @@ jobs:
         with:
           terraform_version: "~> 1.2"
 
-      - name: Set working directory
-        run: cd terraform
-
       - name: Check Terraform format # test
         run: terraform fmt -check
 
@@ -36,7 +33,7 @@ jobs:
         run: terraform validate
 
       - name: Plan Terraform code # - Plan your terraform code
-        run: terraform plan
+        run: cd terraform && terraform plan
 
       - name: Apply Terraform # - Apply terraform code
         run: terraform apply -auto-approve
