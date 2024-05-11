@@ -1,25 +1,47 @@
-# один файл - это один workflow, их может быть много
-# workflow находящийся в репозитории, работает с данным репозиторием либо вызывается из другого репозитория.
-
-name: CI
+name: Deploy Infrastructure
 
 on:
-  workflow_dispatch:
+  push: # any push to terraform directory
+    paths:
+      - 'terraform/**'
+  workflow_dispatch: # manual run
 
 jobs:
-  sync:
-    runs-on: ubuntu-latest
+  deploy:
+    runs-on: ubuntu-latest # CI server (runner) as ubuntu-latest
+
     steps:
-      - name: Checkout
+      - name: Checkout # Checkout your code/files (Action checkout)
         uses: actions/checkout@v3
 
-      - name: Setup AWS CLI
+      - name: Configure AWS Credentials # - Configure access to AWS account (Action configure-aws-credentials)
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-2
 
-      - name: Sync files to S3 bucket
-        run:
-          aws s3 sync test_dir s3://qnt-clouds-for-pe-tfstate --delete
+      - name: Setup Terraform # - Terraform setup (Action?)
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "~> 5.0"
+
+      - name: Check Terraform format # test
+        run: terraform fmt -check
+
+      - name: Validate Terraform # test
+        run: terraform validate
+
+      - name: Plan Terraform code # - Plan your terraform code
+        run: terraform plan
+
+      - name: Apply Terraform # - Apply terraform code
+        run: terraform apply -auto-approve
+
+      - name: Print Message
+        run: echo "Terraform applied. Hello from Deploy workflow!"
+
+#
+#      - name: Sync files to S3 bucket
+#        run:
+#          aws s3 sync test_dir s3://qnt-clouds-for-pe-tfstate  --delete
