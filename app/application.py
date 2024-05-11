@@ -1,0 +1,1 @@
+print('Hello from project_terraform_v3')
