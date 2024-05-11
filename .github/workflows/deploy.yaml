@@ -1,0 +1,45 @@
+name: Deploy Infrastructure
+
+on:
+  push: # any push to terraform directory
+    paths:
+      - 'terraform/**'
+  workflow_dispatch: # manual run
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest # CI server (runner) as ubuntu-latest
+
+    steps:
+      - name: Checkout # Checkout your code/files (Action checkout)
+        uses: actions/checkout@v3
+
+      - name: Configure AWS Credentials # - Configure access to AWS account (Action configure-aws-credentials)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-2
+
+      - name: Setup Terraform # - Terraform setup (Action?)
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "~> 1.2"
+
+      - name: Check Terraform format # test
+        run: terraform fmt -check
+
+      - name: Validate Terraform # test
+        run: terraform validate
+
+      - name: Initialize Terraform code
+        run: cd terraform && terraform init -reconfigure
+
+      - name: Plan Terraform code # - Plan your terraform code
+        run: cd terraform && terraform plan
+
+      - name: Apply Terraform # - Apply terraform code
+        run: cd terraform && terraform apply -auto-approve
+
+      - name: Print Message
+        run: echo "Terraform applied. Hello from Deploy workflow!"
